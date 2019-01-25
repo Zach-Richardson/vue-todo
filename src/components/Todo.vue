@@ -1,13 +1,17 @@
 <template>
-  <div class="row todo">
-    <div class="col mt-3">
-      {{todo.name}}
-      <div class="btn-group float-right">
-        <button class="btn btn-success" @click="doneTodo(todo)" v-show="!todo.done">Done</button>
-        <button class="btn btn-danger" @click="removeTodo(todo)">Remove</button>
+    <div class="card">
+      <div class="image">
+        <img src="@/assets/todo.png">
+      </div>
+      <div class="content">
+        <div class="header">{{todo.name}}</div>
+        <div class="description">{{todo.description}}</div>
+      </div>
+      <div class="extra content">
+        <button class="ui button primary" @click="doneTodo(todo)" v-show="!todo.done">Done</button>
+        <button class="ui button negative" @click="removeTodo(todo)">Remove</button>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

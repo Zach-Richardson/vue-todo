@@ -40,13 +40,15 @@ export default new Vuex.Store({
     getTodos(state) {
       const todos = [
         {
-          id: 1, 
+          id: 1,
           name: "Do Something",
+          description: "This is something I really need to do",
           done: false
         },
         {
           id: 2,
           name: "Do Something Else",
+          description: "This is something else I really need to do",
           done: false
         }
       ]
