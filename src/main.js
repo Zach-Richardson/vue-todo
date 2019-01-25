@@ -1,9 +1,10 @@
-import "semantic-ui-css/semantic.min.css"
 import Vue from "vue";
-import SuiVue from "semantic-ui-vue";
+import VueMaterial from "vue-material";
 import App from "@/App.vue";
 import router from "@/router";
 import store from "@/store";
+import "vue-material/dist/vue-material.min.css";
+import "vue-material/dist/theme/default.css";
 
 Vue.config.productionTip = false;
 
@@ -12,4 +13,4 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-Vue.use(SuiVue);
+Vue.use(VueMaterial);

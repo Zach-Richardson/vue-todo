@@ -1,7 +1,15 @@
 <template>
-  <div class="ui inverted menu">
-    <router-link class="item" v-for="item in items" :key="item.id" :to="item.route">{{item.name}}</router-link>
-  </div>
+  <md-menu md-align-trigger md-size="medium">
+    <md-button md-menu-trigger>
+      <md-icon>menu</md-icon>
+    </md-button>
+
+    <md-menu-content>
+      <md-menu-item v-for="item in items" :key="item.id">
+        <router-link :to="item.route">{{item.name}}</router-link>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
 </template>
 
 <script>
