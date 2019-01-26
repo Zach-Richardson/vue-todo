@@ -13,7 +13,7 @@ const sequelize = new Sequelize("postgres", "postgres", "postgres", {
 });
 
 const Account = sequelize.define("account", {
-  id: { type: Sequelize.UUIDV4, primaryKey: true },
+  id: { type: Sequelize.UUID, primaryKey: true },
   firstName: { type: Sequelize.STRING },
   lastName: { type: Sequelize.STRING },
   email: { type: Sequelize.STRING },
@@ -27,4 +27,7 @@ const Task = sequelize.define("task", {
   done: { type: Sequelize.STRING }
 });
 
-export default { Account, Task };
+Account.sync();
+Task.sync();
+
+module.exports = { Account, Task };
