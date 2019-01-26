@@ -1,15 +1,14 @@
 <template>
-<div>
-  <top-menu></top-menu>
-  <router-view></router-view>
-</div>
+  <div>
+    <navigation></navigation>
+  </div>
 </template>
 
 <script>
-import TopMenu from "@/components/TopMenu.vue";
+import Navigation from "@/components/Navigation.vue";
 
 export default {
-  components: { TopMenu }
+  components: { Navigation }
 };
 </script>
 
