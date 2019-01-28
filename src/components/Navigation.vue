@@ -1,87 +1,55 @@
 <template>
-  <div class="page-container">
-    <md-app>
-      <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <span class="md-title">ToDo</span>
-      </md-app-toolbar>
+  <v-navigation-drawer v-model="drawer" permanent absolute app>
+    <v-toolbar flat class="transparent">
+      <v-list class="pa-0">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img
+              src="https://media.licdn.com/dms/image/C5603AQGe8CunU5WozQ/profile-displayphoto-shrink_100_100/0?e=1554336000&v=beta&t=MvCH6K2FJiXe2lbksoebM8S808PRKs4l3Z_FwuWK910"
+            >
+          </v-list-tile-avatar>
 
-      <md-app-drawer :md-active.sync="menuVisible" md-persistent="mini">
-        <md-toolbar class="md-transparent" md-elevation="0">
-          <span>Navigation</span>
+          <v-list-tile-content>
+            <v-list-tile-title>Zach Richardson</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
 
-          <div class="md-toolbar-section-end">
-            <md-button class="md-icon-button md-dense" @click="toggleMenu">
-              <md-icon>keyboard_arrow_left</md-icon>
-            </md-button>
-          </div>
-        </md-toolbar>
-        <md-list>
-          <md-list-item>
-            <router-link to="/">
-              <md-icon>home</md-icon>
-            </router-link>
-            <router-link to="/" class="md-list-item-text">
-              <span>Home</span>
-            </router-link>
-          </md-list-item>
-          <md-list-item>
-            <router-link to="/register">
-              <md-icon>person_add</md-icon>
-            </router-link>
-            <router-link to="/register" class="md-list-item-text">
-              <span>Register</span>
-            </router-link>
-          </md-list-item>
-          <md-list-item>
-            <router-link to="/login">
-              <md-icon>lock_open</md-icon>
-            </router-link>
-            <router-link to="/login" class="md-list-item-text">
-              <span>Login</span>
-            </router-link>
-          </md-list-item>
-        </md-list>
-      </md-app-drawer>
+    <v-list class="pt-0" dense>
+      <v-divider></v-divider>
 
-      <md-app-content>
-        <router-view></router-view>
-      </md-app-content>
-    </md-app>
-  </div>
+      <v-list-tile v-for="item in items" :key="item.title" @click>
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
 export default {
   name: "Navigation",
-  data: data,
+  data: function() {
+    return {
+      items: [
+        { title: "Home", icon: "dashboard" },
+        { title: "About", icon: "question_answer" }
+      ]
+    };
+  },
   methods: {
-    toggleMenu
+    toggleMenu() {
+      this.menuVisible = !this.menuVisible;
+    }
   }
 };
-
-function data() {
-  return {
-    menuVisible: false
-  };
-}
-
-function toggleMenu() {
-  this.menuVisible = !this.menuVisible;
-}
 </script>
 
 <style lang="scss" scoped>
-.md-app {
-  height: 100vh;
-  border: 1px solid rgba(#000, 0.12);
-}
-
-// Demo purposes only
-.md-drawer {
-  width: 230px;
-  max-width: calc(100vw - 125px);
-}
 </style>
