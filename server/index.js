@@ -1,16 +1,20 @@
-var express = require("express");
-var graphqlHTTP = require("express-graphql");
-var { buildSchema } = require("graphql");
+const { Accounts, Tasks } = require("./db");
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const { buildSchema } = require("graphql");
 
-var schema = buildSchema(`
+// eslint-disable-next-line no-console
+console.log(Accounts, Tasks);
+
+const schema = buildSchema(`
   type Query {
     hello: String
   }
 `);
 
-var root = { hello: () => "Hello world!" };
+const root = { hello: () => "Hello world!" };
 
-var app = express();
+const app = express();
 app.use(
   "/graphql",
   graphqlHTTP({
