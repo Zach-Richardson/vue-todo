@@ -1,25 +1,26 @@
+const api = require("./api");
+const bodyParser = require("body-parser");
 const express = require("express");
-const graphqlHTTP = require("express-graphql");
-const { buildSchema } = require("graphql");
+const morgan = require("morgan");
+const process = require("process");
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
+const root = `${__dirname}/..`;
+const port = process.env.PORT || "4096";
+const listenAddr = process.env.LISTEN_ADDR || "127.0.0.1";
 
-const root = { hello: () => "Hello world!" };
+async function main() {
+  const app = express();
+  app.use(morgan("dev"));
+  app.use(bodyParser.json());
+  app.listen(port, listenAddr);
+  app.use("/account", new api.Account());
+  app.use("/auth", new api.Auth());
+  app.use("/task", new api.Task());
 
-const app = express();
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true
-  })
-);
-app.listen(4096, () => {
-  // eslint-disable-next-line no-console
-  console.log("Now browse to localhost:4096/graphql");
-});
+  app.get("/*", (req, res) => {
+    const url = req.params[0] ? `dist/${req.params[0]}` : `dist/index.html`;
+    res.sendFile(url, { root });
+  });
+}
+
+main();
