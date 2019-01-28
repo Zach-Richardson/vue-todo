@@ -13,12 +13,10 @@ async function main() {
   app.use(morgan("dev"));
   app.use(bodyParser.json());
   app.listen(port, listenAddr);
-  app.use("/account", new api.Account({ server: this }).router);
-  app.use("/auth", new api.Auth({ server: this }).router);
-  app.use("/task", new api.Task({ server: this }).router);
+  app.use("/account", api.account.get);
   app.get("/*", (req, res) => {
     const url = req.params[0] ? `dist/${req.params[0]}` : `dist/index.html`;
-    res.sendFile(url, { root });
+    res.sendFile(req.params[0] || "dist/index.html", { root });
   });
 }
 
