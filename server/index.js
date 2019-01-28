@@ -19,4 +19,7 @@ app.use(
     graphiql: true
   })
 );
-app.listen(4096, () => console.log("Now browse to localhost:4096/graphql"));
+app.listen(4096, () => {
+  // eslint-disable-next-line no-console
+  console.log("Now browse to localhost:4096/graphql")
+});
