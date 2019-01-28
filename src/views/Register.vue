@@ -1,92 +1,111 @@
 <template>
-  <div>
-    <form class="md-layout md-alignment-top-center" @submit.stop.prevent="register">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Create a Free Account</div>
-        </md-card-header>
+  <v-form v-model="valid" @submit.stop.prevent="snackbar = true">
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-card>
+            <v-card-title primary-title>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>
+                  <h3 class="headline mb-0">Register</h3>
+                </v-layout>
+              </v-container>
+            </v-card-title>
 
-        <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>First Name</label>
-                <md-input type="text" v-model="firstName" required/>
-                <span class="md-error" v-show="!firstName">The first name is required</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>Last Name</label>
-                <md-input type="text" v-model="lastName" required/>
-                <span class="md-error" v-show="!lastName">The last name is required</span>
-              </md-field>
-            </div>
-          </div>
-          <md-field>
-            <label>Email</label>
-            <md-input type="email" v-model="email" required/>
-            <span class="md-error" v-show="!email">The email is required</span>
-          </md-field>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>Password</label>
-                <md-input type="password" v-model="password" required/>
-                <span class="md-error" v-show="!password">The password is required</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>Confirm Password</label>
-                <md-input type="password" v-model="confirmPassword" required/>
-                <span
-                  class="md-error"
-                  v-show="confirmPassword !== password"
-                >The passwords don't match</span>
-              </md-field>
-            </div>
-          </div>
-        </md-card-content>
+            <v-card-text>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      v-model="firstname"
+                      :rules="nameRules"
+                      label="First name"
+                      required
+                    />
+                  </v-flex>
 
-        <md-card-actions>
-          <md-button type="submit" class="md-primary">Create Account</md-button>
-        </md-card-actions>
-      </md-card>
-      <md-snackbar md-position="left" md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
-        <span>Your account was created successfully!</span>
-        <md-button class="md-primary" @click="showSnackbar = false">Okay</md-button>
-      </md-snackbar>
-    </form>
-  </div>
+                  <v-flex xs12 md6>
+                    <v-text-field v-model="lastname" :rules="nameRules" label="Last name" required/>
+                  </v-flex>
+
+                  <v-flex xs12>
+                    <v-text-field
+                      type="email"
+                      v-model="email"
+                      :rules="emailRules"
+                      label="Email"
+                      required
+                    />
+                  </v-flex>
+
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      type="password"
+                      v-model="password"
+                      :rules="passwordRequired"
+                      label="Password"
+                      required
+                    />
+                  </v-flex>
+
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      type="password"
+                      v-model="confirmPassword"
+                      :rules="passwordMatch"
+                      label="Confirm Password"
+                      required
+                    />
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>
+                  <v-spacer></v-spacer>
+                  <v-btn type="submit" flat color="primary">Register</v-btn>
+                </v-layout>
+              </v-container>
+            </v-card-actions>
+
+            <v-snackbar bottom left :timeout="3000" v-model="snackbar">
+              Account created successfully
+              <v-btn color="pink" flat @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
 export default {
-  name: "register",
-  data: data,
-  methods: {
-    register
+  name: "Register",
+  data: function() {
+    return {
+      firstName: null,
+      lastName: null,
+      nameRules: [v => !!v || "Name is required"],
+      email: null,
+      emailRules: [
+        v => !!v || "Email is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
+      password: null,
+      confirmPassword: null,
+      passwordRequired: [
+        v => !!v || "Password is required"
+      ],
+      passwordMatch: [
+        v =>
+          this.password === this.confirmPassword || "The passwords don't match"
+      ],
+      snackbar: false,
+      valid: false
+    };
   }
 };
-
-function data() {
-  return {
-    firstName: null,
-    lastName: null,
-    email: null,
-    password: null,
-    confirmPassword: null,
-    showSnackbar: false,
-    position: "left",
-    duration: 4000
-  };
-}
-
-function register() {
-  this.showSnackbar = true;
-}
 </script>
-
-<style lang="scss" scoped>
-</style>

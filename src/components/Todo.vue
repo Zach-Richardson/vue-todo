@@ -27,6 +27,3 @@ export default {
   methods: { ...mapActions(["doneTodo", "removeTodo"]) }
 };
 </script>
-
-<style scoped lang="scss">
-</style>

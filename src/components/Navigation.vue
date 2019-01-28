@@ -19,7 +19,7 @@
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
 
-      <v-list-tile v-for="item in items" :key="item.title" @click="goToRoute(item.route)">
+      <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.route)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -46,14 +46,6 @@ export default {
         { title: "Login", icon: "lock_open", route: "/login" }
       ]
     };
-  },
-  methods: {
-    goToRoute(route) {
-      this.$router.push(route);
-    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

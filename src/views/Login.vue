@@ -1,59 +1,69 @@
 <template>
-  <div>
-    <form class="md-layout md-alignment-top-center" @submit.stop.prevent="login">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Login</div>
-        </md-card-header>
+  <v-form v-model="valid" @submit.stop.prevent="snackbar = true">
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-card>
+            <v-card-title primary-title>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>
+                  <h3 class="headline mb-0">Log In</h3>
+                </v-layout>
+              </v-container>
+            </v-card-title>
 
-        <md-card-content>
-          <md-field>
-            <label>Email</label>
-            <md-input type="email" autocomplete="email" v-model="email" required/>
-            <span class="md-error" v-show="!email">The email is required</span>
-          </md-field>
-          <md-field>
-            <label>Password</label>
-            <md-input type="password" autocomplete="password" v-model="password" required/>
-            <span class="md-error" v-show="!password">The password is required</span>
-          </md-field>
-        </md-card-content>
+            <v-card-text>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>             
 
-        <md-card-actions>
-          <md-button type="submit" class="md-primary">Log in</md-button>
-        </md-card-actions>
-      </md-card>
-      <md-snackbar md-position="left" md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
-        <span>Welcome Back!</span>
-        <md-button class="md-primary" @click="showSnackbar = false">Thanks</md-button>
-      </md-snackbar>
-    </form>
-  </div>
+                  <v-flex xs12>
+                    <v-text-field type="email" v-model="email" :rules="emailRules" label="Email" required />
+                  </v-flex>
+
+                  <v-flex xs12>
+                    <v-text-field type="password" v-model="password" :rules="passwordRules" label="Password" required />
+                  </v-flex>
+
+                </v-layout>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-container grid-list-lg fluid>
+                <v-layout row wrap>
+                  <v-spacer></v-spacer>
+                  <v-btn type="submit" flat color="primary">Log In</v-btn>
+                </v-layout>                
+              </v-container>
+
+            </v-card-actions>
+            <v-snackbar bottom left :timeout="3000" v-model="snackbar">
+              Welcome back, Zach
+              <v-btn color="pink" flat @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
 export default {
-  name: "login",
-  data: data,
-  methods: {
-    login
+  name: "Login",
+  data: function() {
+    return {
+      email: null,
+      emailRules: [
+        v => !!v || "Email is required"
+      ],
+      password: null,
+      passwordRules: [
+        v => !!v || "Password is required"
+      ],
+      snackbar: false,
+      valid: false
+    };
   }
 };
-
-function data() {
-  return {
-    email: null,
-    password: null,
-    showSnackbar: false,
-    position: "left",
-    duration: 4000
-  };
-}
-
-function login() {
-  this.showSnackbar = true;
-}
 </script>
-
-<style lang="scss" scoped>
-</style>

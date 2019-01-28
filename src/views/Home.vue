@@ -1,5 +1,5 @@
 <template>
-  <v-container v-bind="{ [`grid-list-lg`]: true }" fluid>
+  <v-container grid-list-lg fluid>
     <v-layout row wrap>
       <Todo v-for="todo in allTodos" :key="todo.id" :todo="todo"/>
     </v-layout>
