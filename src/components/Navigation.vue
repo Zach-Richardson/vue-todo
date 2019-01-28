@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" permanent absolute app>
+  <v-navigation-drawer enable-resize-watcher app v-model="drawer">
     <v-toolbar flat class="transparent">
       <v-list class="pa-0">
         <v-list-tile avatar>
@@ -19,7 +19,7 @@
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
 
-      <v-list-tile v-for="item in items" :key="item.title" @click>
+      <v-list-tile v-for="item in items" :key="item.title" @click="goToRoute(item.route)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -35,17 +35,21 @@
 <script>
 export default {
   name: "Navigation",
+  props: {
+    drawer: Boolean
+  },
   data: function() {
     return {
       items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
+        { title: "Home", icon: "dashboard", route: "/" },
+        { title: "Register", icon: "person_add", route: "/register" },
+        { title: "Login", icon: "lock_open", route: "/login" }
       ]
     };
   },
   methods: {
-    toggleMenu() {
-      this.menuVisible = !this.menuVisible;
+    goToRoute(route) {
+      this.$router.push(route);
     }
   }
 };

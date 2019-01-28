@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <Navigation />
+    <Navigation :drawer="drawer" />
 
     <v-toolbar class="primary" app>
-      <v-toolbar-side-icon class="white--text"></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">ToDo</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn color="primary" icon>
@@ -19,15 +19,6 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-
-    <v-footer height="auto" class="primary lighten-3" app>
-      <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
-          &copy;2018 —
-          <strong>ToDo</strong>
-        </v-flex>
-      </v-layout>
-    </v-footer>
     
   </v-app>
 </template>
@@ -38,6 +29,11 @@ import Navigation from "@/components/Navigation";
 export default {
   components: {
     Navigation
+  },
+  data: function() {
+    return {
+      drawer: true
+    }
   }
 }
 </script>
