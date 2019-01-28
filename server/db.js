@@ -12,7 +12,7 @@ const sequelize = new Sequelize("postgres", "postgres", "postgres", {
   }
 });
 
-const Account = sequelize.define("account", {
+const Account = sequelize.define("Account", {
   id: { type: Sequelize.UUID, primaryKey: true },
   firstName: { type: Sequelize.STRING },
   lastName: { type: Sequelize.STRING },
@@ -20,7 +20,7 @@ const Account = sequelize.define("account", {
   password: { type: Sequelize.STRING }
 });
 
-const Task = sequelize.define("task", {
+const Task = sequelize.define("Task", {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING },
