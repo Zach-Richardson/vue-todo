@@ -1,10 +1,6 @@
-const { Accounts, Tasks } = require("./db");
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
-
-// eslint-disable-next-line no-console
-console.log(Accounts, Tasks);
 
 const schema = buildSchema(`
   type Query {
