@@ -13,6 +13,7 @@ async function main() {
   app.use(morgan("dev"));
   app.use(bodyParser.json());
   app.listen(port, listenAddr);
+
   app.get("/account", api.account.get);
   app.post("/account", api.account.post);
   app.patch("/account", api.account.patch);
@@ -21,6 +22,7 @@ async function main() {
   app.post("/task", api.task.post);
   app.patch("/task", api.task.patch);
   app.delete("/task", api.task.remove);
+
   app.get("/*", (req, res) => {
     const url = req.params[0] ? `dist/${req.params[0]}` : `dist/index.html`;
     res.sendFile(url, { root });
