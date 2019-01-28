@@ -18,6 +18,7 @@ async function main() {
   app.post("/account", api.account.post);
   app.patch("/account", api.account.patch);
   app.delete("/account", api.account.remove);
+
   app.get("/task", api.task.get);
   app.post("/task", api.task.post);
   app.patch("/task", api.task.patch);
