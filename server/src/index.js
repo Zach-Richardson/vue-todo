@@ -1,9 +1,10 @@
 const { ApolloServer } = require("apollo-server");
-const { AccountAPI, TaskAPI } = require("./datasources");
-const resolvers = require("./resolvers")
-const typeDefs = require("./schema");
+const { TaskAPI, resolvers, typeDefs } = require("./graph");
+const db = require("./db");
 
-const store = createStore();
+console.log(db);
+
+const store = db;
 
 const server = new ApolloServer({ 
   context: async ({ req }) => {
