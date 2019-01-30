@@ -46,6 +46,7 @@ export default {
   components: { Todo },
   data: function() {
     return {
+      tasks: [],
       name: "",
       description: "",
       dialog: false
