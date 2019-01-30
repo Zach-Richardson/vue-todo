@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "autoprefixer": "^9.4.7",
     "jquery": "^3.3.1",
     "morgan": "^1.9.1",
     "vue": "^2.5.21",
