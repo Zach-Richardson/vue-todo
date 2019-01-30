@@ -1,5 +1,5 @@
 const { sequelize, Sequelize } = require("./models");
 
-const task = sequelize.model("Task");
+const tasks = sequelize.model("Task");
 
-module.exports = { account, task };
+module.exports = { tasks };
