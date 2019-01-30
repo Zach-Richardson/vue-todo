@@ -1,0 +1,30 @@
+{
+  "name": "todo-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-datasource": "^0.2.2",
+    "apollo-datasource-rest": "^0.2.2",
+    "apollo-server": "^2.3.3",
+    "apollo-server-testing": "^2.3.3",
+    "graphql": "^14.1.1",
+    "nodemon": "^1.18.9",
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0"
+  },
+  "devDependencies": {
+    "apollo-link": "^1.2.3",
+    "apollo-link-http": "^1.5.5",
+    "jest": "^23.6.0",
+    "nock": "^10.0.2",
+    "node-fetch": "^2.2.1"
+  }
+}

@@ -7,9 +7,6 @@ build:
 
 clean:
 	rm -rf ./node_modules
-
-create-table:
-	psql -h localhost -U postgres -d postgres -f CreateTables.sql
 	
 db-clean:
 	docker kill $(DOCKER_DB_NAME) 2>/dev/null || exit 0
