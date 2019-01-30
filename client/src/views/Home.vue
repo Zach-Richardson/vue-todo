@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg fluid>
     <v-layout row wrap>
-      <Todo v-for="todo in allTodos" :key="todo.id" :todo="todo"/>
+      <Todo v-for="todo in tasks" :key="todo.id" :todo="todo"/>
     </v-layout>
 
     <v-layout row justify-center>
@@ -39,38 +39,53 @@
 
 <script>
 import Todo from "@/components/Todo";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import gql from "graphql-tag";
 
 export default {
   name: "Home",
   components: { Todo },
-  mounted: function() {
-    this.getTodos();
-  },
   data: function() {
     return {
-      size: "sm",
       name: "",
       description: "",
       dialog: false
     };
   },
+  apollo: {
+    tasks: gql`
+      query {
+        tasks {
+          id,
+          name,
+          description,
+          done
+        }
+      }
+    `
+  },
   methods: {
-    ...mapActions(["addTodo", "getTodos"]),
-    saveTask() {
-      this.addTodo({
-        id: Math.floor(Math.random() * 1000),
-        done: false,
+    async saveTask() {
+      const variables = { 
         name: this.name,
-        description: this.description
-      });
-      this.name = "";
-      this.description = "";
+        description: this.description,
+        done: false
+      };
+      const mutation = gql`
+        mutation($name: String!, $description: String!, $done: Boolean!) {
+          createTask(name: $name, description: $description, done: $done) {
+            task {
+              id
+              name
+              description
+              done
+            }
+          }
+        }
+      `;
+      const result = await this.$apollo.mutate({ mutation, variables });
+      this.task = result.data.createTask.task;    
       this.dialog = false;
     }
-  },
-  computed: {
-    ...mapGetters(["allTodos"])
   }
 };
 </script>

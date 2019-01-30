@@ -11,7 +11,8 @@ class TaskAPI extends DataSource {
   }
 
   async completeTask(taskId) {
-    const task = await this.store.tasks.findById(taskId);
+    console.log(taskId);
+    const task = await this.store.tasks.findByPk(taskId);
     task.done = true;
     task.save();
     return task;
@@ -23,7 +24,7 @@ class TaskAPI extends DataSource {
   }
 
   async getTaskById(taskId) {
-    const task = await this.store.tasks.findById(taskId);
+    const task = await this.store.tasks.findByPk(taskId);
     return task;
   }
 

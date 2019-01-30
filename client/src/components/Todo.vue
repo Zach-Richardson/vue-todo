@@ -5,25 +5,63 @@
 
       <v-card-title primary-title>
         <div>
-          <h3 class="headline mb-0">{{todo.name}}</h3>
-          <div>{{todo.description}}</div>
+          <h3 class="headline mb-0">{{task.name}}</h3>
+          <div>{{task.description}}</div>
         </div>
       </v-card-title>
 
       <v-card-actions>
-        <v-btn flat color="primary" @click="doneTodo(todo)" v-show="!todo.done">Done</v-btn>
-        <v-btn flat color="error" @click="removeTodo(todo)">Remove</v-btn>
+        <v-btn flat color="primary" @click="completeTodo()" v-show="!task.done">Done</v-btn>
+        <v-btn flat color="error" @click="removeTodo()">Remove</v-btn>
       </v-card-actions>
     </v-card>
   </v-flex>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import gql from "graphql-tag";
 
 export default {
   name: "Todo",
   props: { todo: Object },
-  methods: { ...mapActions(["doneTodo", "removeTodo"]) }
+  data: function() {
+    return { task: this.todo };
+  },
+  methods: {
+    async completeTodo() {
+      const variables = { id: this.todo.id };
+      const mutation = gql`
+        mutation($id: Int!) {
+          completeTask(taskId: $id) {
+            task {
+              id
+              name
+              description
+              done
+            }
+          }
+        }
+      `;
+      const result = await this.$apollo.mutate({ mutation, variables });
+      this.task = result.data.completeTask.task;
+    },
+    async removeTodo() {
+      const variables = { id: this.todo.id };
+      const mutation = gql`
+        mutation($id: Int!) {
+          removeTask(taskId: $id) {
+            task {
+              id
+              name
+              description
+              done
+            }
+          }
+        }
+      `;
+      const result = await this.$apollo.mutate({ mutation, variables });
+      this.task = result.data.removeTask.task;
+    }
+  }
 };
 </script>
