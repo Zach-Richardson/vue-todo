@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg fluid>
     <v-layout row wrap>
-      <Todo v-for="todo in tasks" :key="todo.id" :todo="todo"/>
+      <Task v-for="task in allTasks" :key="task.id" :task="task"/>
     </v-layout>
 
     <v-layout row justify-center>
@@ -29,7 +29,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="saveTask">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -38,53 +38,32 @@
 </template>
 
 <script>
-import Todo from "@/components/Todo";
-import gql from "graphql-tag";
+import Task from "@/components/Task";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
-  components: { Todo },
+  components: { Task },
   data: function() {
     return {
-      tasks: [],
       name: "",
       description: "",
       dialog: false
     };
   },
-  apollo: {
-    tasks: gql`
-      query {
-        tasks {
-          id,
-          name,
-          description,
-          done
-        }
-      }
-    `
+  mounted: async function() { 
+    await this.getTasks();
   },
+  computed: { ...mapGetters(['allTasks']) },
   methods: {
-    async saveTask() {
-      const variables = { 
+    ...mapActions(['createTask', 'getTasks']),
+    async save() {
+      const task = { 
         name: this.name,
         description: this.description,
         done: false
       };
-      const mutation = gql`
-        mutation($name: String!, $description: String!, $done: Boolean!) {
-          createTask(name: $name, description: $description, done: $done) {
-            task {
-              id
-              name
-              description
-              done
-            }
-          }
-        }
-      `;
-      const result = await this.$apollo.mutate({ mutation, variables });
-      this.task = result.data.createTask.task;    
+      await this.createTask(task);
       this.dialog = false;
     }
   }

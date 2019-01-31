@@ -11,7 +11,6 @@ class TaskAPI extends DataSource {
   }
 
   async completeTask(taskId) {
-    console.log(taskId);
     const task = await this.store.tasks.findByPk(taskId);
     task.done = true;
     task.save();
@@ -30,7 +29,7 @@ class TaskAPI extends DataSource {
 
   async createTask({name, description, done}) {
     const task = await this.store.tasks.create({ name, description, done });
-    return task
+    return task;
   }
 
   async removeTask(taskId) {

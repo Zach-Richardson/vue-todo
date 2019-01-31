@@ -21,7 +21,6 @@ module.exports = {
     },
     createTask: async (_, { name, description, done }, { dataSources }) => {
       const result = await dataSources.taskAPI.createTask({ name, description, done });
-      console.log(result.dataValues);
       const failure = {
         success: false,
         message: 'failed to create task',
