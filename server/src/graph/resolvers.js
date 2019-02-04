@@ -7,7 +7,7 @@ module.exports = {
   },
   Mutation: {
     completeTask: async (_, { taskId }, { dataSources }) => {
-      const result = dataSources.taskAPI.completeTask({ taskId });
+      const result = dataSources.taskAPI.completeTask(taskId);
       const failure = {
         success: false,
         message: 'failed to complete task',
@@ -21,7 +21,6 @@ module.exports = {
     },
     createTask: async (_, { name, description, done }, { dataSources }) => {
       const result = await dataSources.taskAPI.createTask({ name, description, done });
-      console.log(result.dataValues);
       const failure = {
         success: false,
         message: 'failed to create task',
@@ -34,7 +33,7 @@ module.exports = {
       return !result ? failure : success;
     },
     removeTask: async (_, { taskId }, { dataSources }) => {
-      const result = dataSources.taskAPI.removeTask({ taskId });
+      const result = dataSources.taskAPI.removeTask(taskId);
       const failure = {
         success: false,
         message: 'failed to remove task',

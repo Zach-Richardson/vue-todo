@@ -13,6 +13,7 @@ const typeDefs = gql`
   } 
 
   type Task {
+    id: Int,
     name: String,
     description: String,
     done: Boolean,

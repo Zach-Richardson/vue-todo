@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg fluid>
     <v-layout row wrap>
-      <Todo v-for="todo in allTodos" :key="todo.id" :todo="todo"/>
+      <Task v-for="task in allTasks" :key="task.id" :task="task"/>
     </v-layout>
 
     <v-layout row justify-center>
@@ -29,7 +29,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="saveTask">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -38,39 +38,34 @@
 </template>
 
 <script>
-import Todo from "@/components/Todo";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import Task from "@/components/Task";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
-  components: { Todo },
-  mounted: function() {
-    this.getTodos();
-  },
+  components: { Task },
   data: function() {
     return {
-      size: "sm",
       name: "",
       description: "",
       dialog: false
     };
   },
+  mounted: async function() { 
+    await this.getTasks();
+  },
+  computed: { ...mapGetters(['allTasks']) },
   methods: {
-    ...mapActions(["addTodo", "getTodos"]),
-    saveTask() {
-      this.addTodo({
-        id: Math.floor(Math.random() * 1000),
-        done: false,
+    ...mapActions(['createTask', 'getTasks']),
+    async save() {
+      const task = { 
         name: this.name,
-        description: this.description
-      });
-      this.name = "";
-      this.description = "";
+        description: this.description,
+        done: false
+      };
+      await this.createTask(task);
       this.dialog = false;
     }
-  },
-  computed: {
-    ...mapGetters(["allTodos"])
   }
 };
 </script>
